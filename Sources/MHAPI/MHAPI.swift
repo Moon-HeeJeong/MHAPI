@@ -26,11 +26,8 @@ public extension MH_API{
 //                        }else{
 //                            completed(T.ResponseType(responseType: .error(code: -1, message: "decoding error"), data: nil))
 //                        }
-                        if let decodingData = try? JSONDecoder().decode(T.ResponseType.self, from: data){
-                            completed(decodingData)
-                        }else{
-                            completed(T.ResponseType(responseType: .error(code: -1, message: "decoding error"), data: nil))
-                        }
+                        let decodingData = try JSONDecoder().decode(T.ResponseType.self, from: data)
+                        completed(decodingData)
                     }catch(let e){
                         completed(T.ResponseType(responseType: .error(code: e.asAFError?.responseCode ?? -1, message: e.localizedDescription), data: nil))
                     }
