@@ -47,12 +47,13 @@ public extension MH_API{
                 completed(T.ResponseType(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                 break
             }
-        }.responseJSON { res in
+        }
+//        .responseJSON { res in
 //#if DEBUG
-print("responseJson \(String(describing: res.value))")
-print("=======================")
+//print("responseJson \(String(describing: res.value))")
+//print("=======================")
 //#endif
-}
+//}
     }
 
     func callByRx<T: MH_APIInfo, R: Response_P>(_ api: T) -> Observable<R> where T.ResponseType == R {
