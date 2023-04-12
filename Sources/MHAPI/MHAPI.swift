@@ -16,13 +16,13 @@ public extension MH_API{
     func call<T: MH_APIInfo>(api: T, completed: @escaping (T.ResponseType)->()){
 
         self.session.request(URL(string: api.address)!, method: api.method, parameters: api.parameters, headers: api.config?.headers).responseData { res in
-            #if DEBUG
+//            #if DEBUG
             print("=======================")
             print("📲url: \(api.address)")
             print("📲parameters: \(String(describing: api.parameters))")
             print("📲method: \(api.method)")
             print("📲header: \(String(describing: api.config?.headers))")
-            #endif
+//            #endif
             
             switch res.result{
             case .success(_):
@@ -47,7 +47,12 @@ public extension MH_API{
                 completed(T.ResponseType(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                 break
             }
-        }
+        }.responseJSON { res in
+//#if DEBUG
+print("responseJson \(String(describing: res.value))")
+print("=======================")
+//#endif
+}
     }
 
     func callByRx<T: MH_APIInfo, R: Response_P>(_ api: T) -> Observable<R> where T.ResponseType == R {
