@@ -18,10 +18,10 @@ public extension MH_API{
         self.session.request(URL(string: api.address)!, method: api.method, parameters: api.parameters, headers: api.config?.headers).responseData { res in
 //            #if DEBUG
             print("=======================")
-            print("📲url: \(api.address)")
-            print("📲parameters: \(String(describing: api.parameters))")
-            print("📲method: \(api.method)")
-            print("📲header: \(String(describing: api.config?.headers))")
+//            print("📲url: \(api.address)")
+//            print("📲parameters: \(String(describing: api.parameters))")
+//            print("📲method: \(api.method)")
+//            print("📲header: \(String(describing: api.config?.headers))")
 //            #endif
             
             switch res.result{
