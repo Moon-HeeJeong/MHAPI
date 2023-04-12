@@ -11,7 +11,6 @@ import RxSwift
 
 /** API INFO **/
 public protocol MH_APIInfo{
-    associatedtype DataType: Model_P
     associatedtype ResponseType: Response_P
     
     var short: String {get}
