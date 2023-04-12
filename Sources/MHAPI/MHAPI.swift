@@ -79,12 +79,18 @@ public extension MH_API{
                     break
                 }
                 observer.onCompleted()
-            }.responseString { res in
+            }.responseJSON { res in
                 #if DEBUG
-                print("responseString \(String(describing: res.value))")
+                print("responseJson \(String(describing: res.value))")
                 print("=======================")
                 #endif
             }
+//            responseString { res in
+//                #if DEBUG
+//                print("responseString \(String(describing: res.value))")
+//                print("=======================")
+//                #endif
+//            }
             return Disposables.create {
                 request.cancel()
             }
