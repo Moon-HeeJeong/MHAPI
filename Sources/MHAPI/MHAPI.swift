@@ -53,14 +53,15 @@ public extension MH_API{
     func callByRx<T: MH_APIInfo, R: Response_P>(_ api: T) -> Observable<R> where T.ResponseType == R {
 
         return Observable<R>.create { observer in
-            #if DEBUG
-            print("=======================")
-            print("📲url: \(api.address)")
-            print("📲parameters: \(String(describing: api.parameters))")
-            print("📲method: \(api.method)")
-            print("📲header: \(String(describing: api.config?.headers))")
-            #endif
+            
             let request = self.session.request(URL(string: api.address)!, method: api.method, parameters: api.parameters, headers: api.config?.headers).responseData { res in
+#if DEBUG
+                print("=======================")
+                print("📲url: \(api.address)")
+                print("📲parameters: \(String(describing: api.parameters))")
+                print("📲method: \(api.method)")
+                print("📲header: \(String(describing: api.config?.headers))")
+#endif
                 switch res.result{
                 case .success(_):
                     if let data = res.value{
