@@ -10,16 +10,13 @@ import Alamofire
 import RxSwift
 
 /** Response **/
-public protocol Response_P: Model_P{
-    associatedtype DataType: Model_P
+public protocol Response_P: Model_T{
+    var responseType: Response_E {get set}
     
-    var responseType: ResponseType {get set}
-    var data: DataType? {get set}
-    
-    init(responseType: ResponseType, data: DataType?)
+    init(responseType: Response_E)
 }
 
-public enum ResponseType{
+public enum Response_E{
     case ok(message: String?)
     case error(code: Int, message: String?)
     
@@ -32,4 +29,5 @@ public enum ResponseType{
         }
     }
 }
+
 

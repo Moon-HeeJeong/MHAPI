@@ -10,7 +10,7 @@ import Alamofire
 import RxSwift
 
 /** API CONFIG **/
-public protocol MH_APIConfig{
+public protocol MH_APIConfig_P{
     var headers: HTTPHeaders?{get}
     var baseURL: String{get}
 }

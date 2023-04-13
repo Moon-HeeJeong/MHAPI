@@ -10,15 +10,15 @@ import Alamofire
 import RxSwift
 
 /** API INFO **/
-public protocol MH_APIInfo{
-    associatedtype ResponseType: Response_P
+public protocol MH_APIInfo_P{
+    associatedtype Response: Response_P
     
     var short: String {get}
     var method: HTTPMethod {get}
     var parameters: Parameters? {get}
-    var config: MH_APIConfig? {get set}
+    var config: MH_APIConfig_P? {get set}
 }
-public extension MH_APIInfo{
+public extension MH_APIInfo_P{
 //    var address: String{
 //        (self.config?.baseURL ?? "") + self.short
 //    }
