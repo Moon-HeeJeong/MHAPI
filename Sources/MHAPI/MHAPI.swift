@@ -38,14 +38,14 @@ public extension MH_API_P{
                         completed(decodingData)
                         
                     }catch(let e){
-                        completed(T.Response(responseType: .error(code: e.asAFError?.responseCode ?? -1, message: e.localizedDescription)))
+                        completed(T.Response(responseType: .error(code: e.asAFError?.responseCode ?? -1, message: e.localizedDescription), data: nil))
                     }
                 }else{
-                    completed(T.Response(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription)))
+                    completed(T.Response(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                 }
                 break
             case .failure(_):
-                completed(T.Response(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription)))
+                completed(T.Response(responseType: .error(code: res.error?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                 break
             }
         }.responseJSON { res in
@@ -61,13 +61,13 @@ public extension MH_API_P{
         return Observable<R>.create { observer in
 
             let request = self.session.request(URL(string: api.address)!, method: api.method, parameters: api.parameters, headers: api.config?.headers).responseData { res in
-#if DEBUG
+                #if DEBUG
                 print("=======================")
                 print("📲url: \(api.address)")
                 print("📲parameters: \(String(describing: api.parameters))")
                 print("📲method: \(api.method)")
                 print("📲header: \(String(describing: api.config?.headers))")
-#endif
+                #endif
                 switch res.result{
                 case .success(_):
                     if let data = res.value{
@@ -75,14 +75,14 @@ public extension MH_API_P{
                             let decodingData = try JSONDecoder().decode(R.self, from: data)
                             observer.onNext(decodingData)
                         }catch let e{
-                            observer.onNext(R(responseType: .error(code: (e as? AFError)?.responseCode ?? -1, message: e.localizedDescription)))
+                            observer.onNext(R(responseType: .error(code: (e as? AFError)?.responseCode ?? -1, message: e.localizedDescription), data: nil))
                         }
                     }else{
-                        observer.onNext(R(responseType: .error(code: (res.error as? AFError)?.responseCode ?? -1, message: res.error?.localizedDescription)))
+                        observer.onNext(R(responseType: .error(code: (res.error)?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                     }
                     break
                 case .failure(_):
-                    observer.onNext(R(responseType: .error(code: (res.error as? AFError)?.responseCode ?? -1, message: res.error?.localizedDescription)))
+                    observer.onNext(R(responseType: .error(code: (res.error)?.responseCode ?? -1, message: res.error?.localizedDescription), data: nil))
                     break
                 }
                 observer.onCompleted()
@@ -92,12 +92,6 @@ public extension MH_API_P{
                 print("=======================")
                 #endif
             }
-//            responseString { res in
-//                #if DEBUG
-//                print("responseString \(String(describing: res.value))")
-//                print("=======================")
-//                #endif
-//            }
             return Disposables.create {
                 request.cancel()
             }
