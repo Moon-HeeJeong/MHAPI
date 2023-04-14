@@ -12,16 +12,15 @@ import RxSwift
 /** Response **/
 public protocol Response_P: Model_T{
     
-    associatedtype DT: DataType_P
+    associatedtype T: DataType_P
     
     var responseType: Response_E {get set}
-    var data: DT? {get set}
+    var data: T? {get set}
     
-    init(responseType: Response_E, data: DT?)
+    init(responseType: Response_E, data: T?)
 }
 
 public protocol DataType_P: Model_T{
-    
 }
 
 public enum Response_E{
