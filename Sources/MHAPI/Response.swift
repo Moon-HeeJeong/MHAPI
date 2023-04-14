@@ -11,10 +11,13 @@ import RxSwift
 
 /** Response **/
 public protocol Response_P: Model_T{
-    var responseType: Response_E {get set}
-    var data: DataType_P? {get set}
     
-    init(responseType: Response_E, data: DataType_P?)
+    associatedtype DT: DataType_P
+    
+    var responseType: Response_E {get set}
+    var data: DT? {get set}
+    
+    init(responseType: Response_E, data: DT?)
 }
 
 public protocol DataType_P: Model_T{
